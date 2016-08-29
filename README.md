@@ -1,6 +1,6 @@
 ### rnutil
 
-some utilities
+Some utilities.
 
 Learn more at https://github.com/radiasoft/rnutil.
 

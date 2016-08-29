@@ -28,7 +28,10 @@ def playlist_csv(html):
     for table in soup.find_all('table'):
         for row in table.find_all('tr', 'playlistDetailsListItem'):
             cell = row.find('td', 'title')
-            track = row.find('div', 'numberInner').contents[0]
+            x = row.find('div', 'numberInner')
+            if not x:
+                continue
+            track = x.contents[0]
             tracks[int(track)] = [
                 track,
                 cell.contents[0],
