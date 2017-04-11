@@ -34,3 +34,4 @@ def default_command(file_pdf):
     os.remove(t)
     os.rename(file_pdf, z)
     os.rename(n, file_pdf)
+    os.remove(z)
