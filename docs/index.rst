@@ -3,6 +3,10 @@ Welcome to rnutil
 
 some utilities
 
+.. autosummary::
+   :toctree: _autosummary
+   :recursive:
+
 .. toctree::
    :maxdepth: 2
 

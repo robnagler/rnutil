@@ -1,21 +1,18 @@
-# -*- coding: utf-8 -*-
-u"""Front-end command line for :mod:`rnutil`.
+"""Front-end command line for :mod:`rnutil`.
 
 See :mod:`pykern.pkcli` for how this module is used.
 
-:copyright: Copyright (c) 2016 RadiaSoft LLC.  All Rights Reserved.
-:license: http://www.apache.org/licenses/LICENSE-2.0.html
+:copyright: Copyright (c) 2024 RadiaSoft LLC.  All Rights Reserved.
+:license: https://www.apache.org/licenses/LICENSE-2.0.html
 """
-from __future__ import absolute_import, division, print_function
 
+import pykern.pkcli
 import sys
-
-from pykern import pkcli
 
 
 def main():
-    return pkcli.main('rnutil')
+    return pykern.pkcli.main("rnutil")
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     sys.exit(main())

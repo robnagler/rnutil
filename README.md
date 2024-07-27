@@ -1,13 +1,13 @@
 ### rnutil
 
-Some utilities.
+some utilities
 
-Learn more at https://github.com/radiasoft/rnutil.
+Learn more at https://git.radiasoft.org/rnutil.
 
-Documentation: http://rnutil.readthedocs.org/en/latest/
+Documentation: https://rnutil.readthedocs.io
 
 #### License
 
-License: http://www.apache.org/licenses/LICENSE-2.0.html
+License: https://www.apache.org/licenses/LICENSE-2.0.html
 
-Copyright (c) 2016 RadiaSoft LLC.  All Rights Reserved.
+Copyright (c) 2024 RadiaSoft LLC.  All Rights Reserved.
