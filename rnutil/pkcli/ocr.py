@@ -27,7 +27,7 @@ def default_command(file_pdf):
     z = "zz-{}".format(file_pdf)
     for f in t, n, z:
         assert not os.path.exists(f), "{}: must not exist"
-    subprocess.check_call(["convert", "-density", "300", file_pdf, "-depth", "8", t])
+    subprocess.check_call(["magick", "-density", "300", file_pdf, "-depth", "8", t])
     subprocess.check_call(["tesseract", t, p, "pdf"])
     os.remove(t)
     os.rename(file_pdf, z)
