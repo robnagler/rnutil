@@ -5,10 +5,12 @@
 """
 
 
-def test_parse():
+def test_livewire():
     from pykern import pkunit, pkjson
     from rnutil.pkcli import wwoz
 
-    html = pkunit.data_dir().join("livewire.html").read()
-    result = wwoz.parse(html)
-    pkunit.pkeq(pkjson.load_any(pkunit.data_dir().join("livewire.json")), result)
+    for case in pkunit.case_dirs():
+        html = case.join("livewire.html").read()
+        events = wwoz._parse(html)
+        case.join("livewire.json").write(wwoz._Output(False, events).as_str())
+        case.join("table.txt").write(wwoz._Output(True, events).as_str())
