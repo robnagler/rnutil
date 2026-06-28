@@ -31,12 +31,18 @@ _DEFAULT_PROMPT = textwrap.dedent(
 
     Formatting matters:
     - Use a blank line between logical paragraphs.
-    - Reflow continuous prose into normal paragraphs instead of putting every
-      handwritten line on its own line.
+    - Reflow continuous prose into readable plain-text paragraphs with actual
+      newline characters in the returned text.
+    - Do not put an entire paragraph on one physical line and rely on the
+      viewer to wrap it.
+    - Hard rule: every output line must be 80 characters or fewer, except for
+      a single unbreakable token such as a URL. Break long prose lines at a
+      natural space before column 80; do not split words.
     - Preserve original line breaks for addresses, phone-number blocks,
       postscripts, signoffs, lists, calculations, and intentionally short
       handwritten lines.
-    - Wrap reflowed prose at about 80 characters.
+    - Before returning, check the transcription line by line and fix any line
+      longer than 80 characters.
 
     Return only the transcription.
     """,
