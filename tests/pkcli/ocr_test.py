@@ -14,22 +14,21 @@ def test_openai(monkeypatch):
 
     calls = []
 
-    def _call_openai(pdf_path, prompt, model, max_output_tokens):
-        calls.append((pdf_path.basename, prompt, model, max_output_tokens))
+    def _call_openai(pdf_path, prompt, model):
+        calls.append((pdf_path.basename, prompt, model))
         return {"output_text": "hello"}
 
     monkeypatch.setattr(ocr, "_call_openai", _call_openai)
     monkeypatch.setenv("OPENAI_MODEL", "test-model")
     with pkunit.save_chdir_work():
         pkio.py_path("x.pdf").write_binary(b"%PDF-1.4\n")
-        assert "x.txt" in ocr.openai("x.pdf")
+        assert "x.txt" in str(ocr.openai("x.pdf"))
         assert pkio.read_text("x.txt") == "hello\n"
         assert calls == [
             (
                 "x.pdf",
                 ocr._DEFAULT_PROMPT,
                 "test-model",
-                None,
             ),
         ]
         with pytest.raises(pykern.pkcli.CommandError):
