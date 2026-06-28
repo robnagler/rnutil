@@ -9,14 +9,38 @@ import base64
 import os
 import pykern.pkcli
 import requests
+import textwrap
 
 
 _DEFAULT_MODEL = "gpt-5-mini"
-_DEFAULT_PROMPT = """Transcribe this PDF into plain text. Include
-    visible text from images, tables, forms, and handwriting when
-    present. Preserve the logical reading order and useful line
-    breaks. Format paragraphs at about 80 characters.  Return only the
-    transcription."""
+_DEFAULT_PROMPT = textwrap.dedent(
+    """\
+    Transcribe this PDF into clean, readable plain text.
+
+    Focus on the sender's written message. For handwritten letters, greeting
+    cards, notes, or postcards, include the date, salutation, body,
+    postscripts, addresses, phone numbers, and signoff. Omit decorative
+    artwork, printed greeting-card slogans, copyright notices, product codes,
+    blank pages, and bleed-through from the reverse side unless they are part
+    of the sender's message.
+
+    Preserve the author's wording, spelling, punctuation, ampersands, dashes,
+    names, numbers, and dates as closely as readability allows. Do not
+    summarize, modernize, explain, or translate. If text is unclear, use
+    [illegible] rather than guessing.
+
+    Formatting matters:
+    - Use a blank line between logical paragraphs.
+    - Reflow continuous prose into normal paragraphs instead of putting every
+      handwritten line on its own line.
+    - Preserve original line breaks for addresses, phone-number blocks,
+      postscripts, signoffs, lists, calculations, and intentionally short
+      handwritten lines.
+    - Wrap reflowed prose at about 80 characters.
+
+    Return only the transcription.
+    """,
+).strip()
 
 
 def openai(file_pdf, model=None, prompt=None, prompt_file=None, max_output_tokens=None):
@@ -108,7 +132,7 @@ def _call_openai(pdf_path, prompt, model, max_output_tokens):
                 ),
             ),
             headers={
-                f"Authorization": "Bearer {k}",
+                "Authorization": f"Bearer {k}",
                 "Content-Type": pkjson.CONTENT_TYPE,
             },
             json=p,
