@@ -85,7 +85,9 @@ def _call_openai(pdf_path, prompt, model, max_output_tokens):
                         "type": "input_file",
                         "filename": pdf_path.basename,
                         "file_data": "data:application/pdf;base64,{}".format(
-                            base64.b64encode(pkio.read_binary(pdf_path)).decode("ascii"),
+                            base64.b64encode(pkio.read_binary(pdf_path)).decode(
+                                "ascii"
+                            ),
                         ),
                     },
                     {
@@ -106,7 +108,7 @@ def _call_openai(pdf_path, prompt, model, max_output_tokens):
                 ),
             ),
             headers={
-                "Authorization": "Bearer {}".format(k),
+                f"Authorization": "Bearer {k}",
                 "Content-Type": pkjson.CONTENT_TYPE,
             },
             json=p,
