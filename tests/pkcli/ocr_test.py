@@ -1,14 +1,43 @@
 """test ocr
 
-:copyright: Copyright (c) 2017 RadiaSoft LLC.  All Rights Reserved.
+:copyright: Copyright (c) 2017-2026 RadiaSoft LLC.  All Rights Reserved.
 :license: http://www.apache.org/licenses/LICENSE-2.0.html
 """
 
-from __future__ import absolute_import, division, print_function
 import pytest
 
 
-def test_default_command():
+def test_openai(monkeypatch):
+    from pykern import pkio, pkunit
+    import pykern.pkcli
+    from rnutil.pkcli import ocr
+
+    calls = []
+
+    def _call_openai(pdf_path, prompt, model, max_output_tokens):
+        calls.append((pdf_path.basename, prompt, model, max_output_tokens))
+        return {"output_text": "hello"}
+
+    monkeypatch.setattr(ocr, "_call_openai", _call_openai)
+    monkeypatch.setenv("OPENAI_MODEL", "test-model")
+    with pkunit.save_chdir_work():
+        pkio.py_path("x.pdf").write_binary(b"%PDF-1.4\n")
+        assert "x.txt" in ocr.openai("x.pdf")
+        assert pkio.read_text("x.txt") == "hello\n"
+        assert calls == [
+            (
+                "x.pdf",
+                ocr._DEFAULT_PROMPT,
+                "test-model",
+                None,
+            ),
+        ]
+        with pytest.raises(pykern.pkcli.CommandError):
+            ocr.openai("x.pdf")
+        assert len(calls) == 1
+
+
+def test_magick():
     from pykern import pkunit
     from rnutil.pkcli import ocr
     import random
@@ -48,6 +77,6 @@ def test_default_command():
 
         out = subprocess.check_output(["gs", "-sDEVICE=txtwrite", "-o", "-", "x.pdf"])
         assert t.encode() not in out
-        ocr.default_command("x.pdf")
+        ocr.magick("x.pdf")
         out = subprocess.check_output(["gs", "-sDEVICE=txtwrite", "-o", "-", "x.pdf"])
         assert t.encode() in out
