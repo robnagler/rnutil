@@ -18,6 +18,7 @@ _DEFAULT_PROMPT = """Transcribe this PDF into plain text. Include
     breaks. Format paragraphs at about 80 characters.  Return only the
     transcription."""
 
+
 def openai(file_pdf, model=None, prompt=None, prompt_file=None, max_output_tokens=None):
     """Send file_pdf to OpenAI vision and write same-basename .txt.
 
